@@ -12,6 +12,8 @@ jobs:
         run: |
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
+          echo $TOKEN
+          echo $ISSUE_NUMBER
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
