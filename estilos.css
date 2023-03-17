@@ -1,0 +1,47 @@
+/* reset de estilos */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* estilos del body */
+  
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f2f2f2;
+  }
+  
+  /* estilos de los títulos */
+  
+  h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  
+  /* estilos de los párrafos */
+  
+  p {
+    margin-bottom: 1em;
+  }
+  
+  /* estilos de los enlaces cambio */
+  
+  a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
