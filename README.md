@@ -1,2 +1,2 @@
-# Prueba de repositorio git develop test 1
+# Prueba de repositorio git develop
 Primer repositorio en git de prueba, en rama por defecto develop
