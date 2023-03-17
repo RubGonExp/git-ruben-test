@@ -1,3 +1,12 @@
+---
+name: Test proposal
+about: Create a report to testing
+title: ''
+labels: ''
+assignees: RubGonExp
+
+---
+
 # Test Proposal
 
 ## Description
