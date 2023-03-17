@@ -1,0 +1,26 @@
+name: update issue status
+
+on:
+  pull_request:
+    types: [opened, reopened, closed, reopened]
+
+jobs:
+  update_issu_status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update issue status
+        uses: marvinpinto/action-automatic-versions@v1.0.2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          labels: |
+            - name: "En progreso"
+              when: "pull_request.opened || pull_request.reopened"
+            - name: "Revisión"
+              when: "pull_request.closed"
+            - name: "Aprobado"
+              when: "pull_request.merged"
+            - name: "Cambios solicitados"
+              when: "pull_request.closed && !pull_request.merged"
+            - name: "Cerrado"
+              when: "pull_request.closed && pull_request.merged"
+          remove-labels: "Abierto"
