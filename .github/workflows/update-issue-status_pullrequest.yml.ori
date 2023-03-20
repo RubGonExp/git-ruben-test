@@ -1,4 +1,4 @@
-gitname: Actualizar estado del issue
+name: Actualizar estado del issue
 
 on:
   pull_request:
