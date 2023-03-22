@@ -11,11 +11,13 @@ jobs:
       - name: Actualizar estado del issue pull request
         run: |
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          EVENT="${{ github.event.pull_request.issue_url }}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          EVENT="${{ github.event.pull_request.title }}"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
           echo $TOKEN
           echo $ISSUE_NUMBER
-          echo $EVENT
+          echo $EVENT | sed -e 's/.*#\([0-9]*\).*/\1/'
+          echo BRANCH
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
