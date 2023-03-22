@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Actualizar estado del issue pull request
         run: |
-          echo "RUBEN_TEST='hola Rubén'" >> $GITHUB_ENV
+          echo "RUBEN_TEST={{ github.event.pull_request.body }}" >> $GITHUB_ENV
       - name: Testing
         run: |
           echo $RUBEN_TEST
