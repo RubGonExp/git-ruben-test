@@ -2,7 +2,7 @@ name: Actualizar estado del issue pull request
 
 on:
   pull_request:
-    types: [opened, reopened, closed, reopened]
+    types: [opened, reopened, closed, reopened, synchronize]
 
 jobs:
   actualizar_estado_issue:
@@ -14,7 +14,7 @@ jobs:
           EVENT="https://github.com/dawa-io/dawa-processor/issues/15"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
           echo $ISSUE_NUMBER
-          echo $EVENT | sed -e 's/.*issues\/\([0-9]*\).*/\1/'
+          echo $EVENT | sed -e 's/.*https:\/\/github.com\/\(.*\)\/issues\/[0-9]+/\1/'
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
