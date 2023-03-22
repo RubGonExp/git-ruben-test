@@ -14,7 +14,7 @@ jobs:
           EVENT="${{ github.event.pull_request.body }}"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
           echo $ISSUE_NUMBER
-          echo $EVENT | sed -e 's/.*(https:\/\/github.com\/\(.*\)\/issues\/[0-9]+)/\1/'
+          echo $EVENT | sed -e 'https\:\/\/github.com\/[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*\/issues\/[0-9]*'
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
