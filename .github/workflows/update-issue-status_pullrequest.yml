@@ -10,12 +10,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Get Pull Request Number
-        run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $$GITHUB_ENV
+        run: |
+          echo "PR_NUMBER='${{ github.event.pull_request.number }}'" >> $GITHUB_ENV
       - name: Get Comment Body
-        run: echo "BODY_TEXT='I have merge into main'" >> $$GITHUB_ENV
+        run: |
+          echo "BODY_TEXT='I have merge into main'" >> $GITHUB_ENV
       - name: Create Comment
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo $PR_NUMBER
           echo $BODY_TEXT
