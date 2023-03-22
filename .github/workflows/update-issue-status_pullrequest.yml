@@ -11,7 +11,7 @@ jobs:
       - name: Actualizar estado del issue pull request
         run: |
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          EVENT="https://github.com/dawa-io/dawa-processor/issues/15"
+          EVENT="${{ github.event.pull_request.body }}"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
           echo $ISSUE_NUMBER
           echo $EVENT | sed -e 's/.*https:\/\/github.com\/\(.*\)\/issues\/[0-9]+/\1/'
