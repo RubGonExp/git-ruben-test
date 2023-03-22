@@ -1,20 +1,3 @@
-name: Actualizar estado del issue pull request
-
-on:
-  pull_request:
-    types: [opened, reopened, closed, synchronize]
-
-jobs:
-  actualizar_estado_issue:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Actualizar estado del issue pull request
-        run: |
-          echo 'RUBEN_TEST="${{ github.event.pull_request.body }}"' >> $GITHUB_ENV
-      - name: Testing
-        run: |
-          echo $RUBEN_TEST
-
 name: Merge Comment
 on:
   pull_request:
