@@ -17,8 +17,8 @@ jobs:
         run: |
           echo $PR_TITLE
           echo $BUILD_CHANGED
-          echo {{ env.PR_TITLE }}
-          echo {{ env.BUILD_CHANGED }}
-          echo {{ steps.test2.outputs.PR_TITLE }}
-          echo {{ steps.test2.outputs.BUILD_CHANGED }}
+          echo ${{ env.PR_TITLE }}
+          echo ${{ env.BUILD_CHANGED }}
+          echo ${{ steps.test2.outputs.PR_TITLE }}
+          echo ${{ steps.test2.outputs.BUILD_CHANGED }}
           
