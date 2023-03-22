@@ -2,7 +2,7 @@ name: Merge Comment
 on:
   pull_request:
     types: [closed]
-    branches: [main]
+    branches: [develop]
 jobs:
   merge-comment:
     permissions: write-all
