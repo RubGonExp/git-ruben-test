@@ -12,11 +12,9 @@ jobs:
         run: |
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
           BRANCH="${{ github.event.pull_request.head.ref }}"
-          EVENT="${{ github.event.pull_request.body }}"
-          ISSUE_NUMBER="${{ github.event.pull_request._links.issue.href }}"
+          ISSUE_NUMBER="${{ github.event.issue.url }}"
           echo $BRANCH
-          echo $ISSUE_NUMBER
-          echo $EVENT | sed -e 'https:\/\/github\.com\/.*\/issues\/[0-9]+'          
+          echo $ISSUE_NUMBER      
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
