@@ -9,27 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Actualizar estado del issue pull request
+        id: test2
         run: |
-          TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          EVENT="${{ github.event.pull_request.body }}"
-          ISSUE_NUMBER="${{ github.event.pull_request.number }}"
-          echo $ISSUE_NUMBER
-          echo $EVENT | sed -e 'https\:\/\/github.com\/[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*\/issues\/[0-9]*'
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
-              LABELS='{"labels": ["En progreso"]}'
-              curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" -d "$LABELS" "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER/labels"
-            elif [ "${{ github.event.action }}" = "closed" ]; then
-              if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
-                LABELS='{"labels": ["Cerrado", "Aprobado"]}'
-                curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" -d "$LABELS" "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER/labels"
-                STATE='{"state": "closed"}'
-                curl -X PATCH -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" -d "$STATE" "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER"
-              else
-                LABELS='{"labels": ["Cambios solicitados", "Revisión"]}'
-                curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" -d "$LABELS" "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER/labels"
-              fi
-              LABELS_REMOVE='{"labels": ["Abierto"]}'
-              curl -X DELETE -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $TOKEN" -d "$LABELS_REMOVE" "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER/labels"
-            fi
-          fi
+          echo "BUILD_CHANGED=$HasBuildDiff" >> $GITHUB_OUTPUT
+          echo "PR_TITLE=[Test] Add report file $(date +%d-%m-%Y)" >> $GITHUB_ENV
+      - name: Testing
+        run: |
+          echo $PR_TITLE
+          echo $BUILD_CHANGED
+          echo {{ env.PR_TITLE }}
+          echo {{ env.BUILD_CHANGED }}
+          echo {{ steps.test2.outputs.PR_TITLE }}
+          echo {{ steps.test2.outputs.BUILD_CHANGED }}
+          
