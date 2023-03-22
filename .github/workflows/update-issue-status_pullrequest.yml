@@ -13,12 +13,20 @@ jobs:
         run: |
           echo "BUILD_CHANGED=$HasBuildDiff" >> $GITHUB_OUTPUT
           echo "PR_TITLE=[Test] Add report file $(date +%d-%m-%Y)" >> $GITHUB_ENV
+          RUBEN_TEST="hola Rubén"
       - name: Testing
         run: |
           echo $PR_TITLE
           echo $BUILD_CHANGED
+          echo $RUBEN_TEST
           echo ${{ env.PR_TITLE }}
           echo ${{ env.BUILD_CHANGED }}
+          echo ${{ env.RUBEN_TEST }}
           echo ${{ steps.test2.outputs.PR_TITLE }}
           echo ${{ steps.test2.outputs.BUILD_CHANGED }}
+          echo ${{ steps.test2.outputs.RUBEN_TEST }}
+          echo ${{ steps.test2.envs.PR_TITLE }}
+          echo ${{ steps.test2.envs.BUILD_CHANGED }}
+          echo ${{ steps.test2.envs.RUBEN_TEST }}
+
           
