@@ -11,9 +11,11 @@ jobs:
       - name: Actualizar estado del issue pull request
         run: |
           TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          EVENT="${{ github.event.pull_request.issue_url }}"
           ISSUE_NUMBER="${{ github.event.pull_request.number }}"
           echo $TOKEN
           echo $ISSUE_NUMBER
+          echo $EVENT
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.action }}" = "opened" ] || [ "${{ github.event.action }}" = "reopened" ]; then
               LABELS='{"labels": ["En progreso"]}'
