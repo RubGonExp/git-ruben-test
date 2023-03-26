@@ -1,8 +1,8 @@
 name: Merge Comment
 on:
   pull_request:
-    types: [closed]
-    branches: [develop]
+    types: [closed, synchronize]
+    # branches: [develop]
 jobs:
   merge-comment:
     permissions: write-all
@@ -14,7 +14,8 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PR_NUMBER: ${{ github.event.pull_request.number }}
-            BODY_TEXT: I have merge into main 2
+            BODY_TEXT: ${{ github.event.pull_request.body }}
         run: |
-          URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
-          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -H "X-GitHub-Api-Version: 2022-11-28" $URL -d "{\"body\": \"$BODY_TEXT\"}"
+          # URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+          # curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -H "X-GitHub-Api-Version: 2022-11-28" $URL -d "{\"body\": \"$BODY_TEXT\"}"
+          echo "Body: $BODY_TEXT"
