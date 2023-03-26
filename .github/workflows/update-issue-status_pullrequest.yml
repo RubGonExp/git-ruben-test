@@ -17,7 +17,11 @@ jobs:
         run: |
           urls=$(echo "$BODY_TEXT" | grep -oP '(?<=\().*?(?=\))')
           for url in $urls; do
+            echo "URL: $url"
             issue_number=$(echo "$url" | grep -oP '(?<=/issues/)\d+')
+            echo "Issue Number: $issue_number"
             comment_body="Este es un comentario de ejemplo para el issue #${issue_number}"
+            echo "Comment Body: $comment_body"
             curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -d "{\"body\":\"$comment_body\"}" "$url/comments"
+            echo "$url/comments"
           done
