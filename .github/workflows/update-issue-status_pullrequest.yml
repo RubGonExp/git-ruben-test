@@ -1,24 +1,40 @@
 name: Merge Comment
 on:
   pull_request:
-    types: [closed, synchronize]
+    types: [synchronize]
     # branches: [develop]
 jobs:
   merge-comment:
     permissions: write-all
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Create Comment
+      - name: Get Issue URLs
+        id: get-issue-urls
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            BODY_TEXT: ${{ github.event.pull_request.body }}
+            body_text: ${{ github.event.pull_request.body }}
         run: |
-          urls=$(echo "$BODY_TEXT" | grep -oP '(?<=\().*?(?=\))')
+          urls=$(echo "$body_text" | grep -oP '(?<=\().*?(?=\))')
+          echo "::set-output name=urls::$(echo "$urls" | sed 's#https://github.com/#https://api.github.com/repos/#')"
+      - name: Add comment to issues
+        env:
+          api_urls: ${{ steps.get-issue-urls.outputs.urls }}
+        run: |
+          echo "api_urls: $api_urls"
+          urls=$api_urls
           for url in $urls; do
-            api_url=$(echo "$url" | sed 's#https://github.com/#https://api.github.com/repos/#')
             issue_number=$(echo "$url" | grep -oP '(?<=/issues/)\d+')
             comment_body="Este es un comentario de ejemplo para el issue #${issue_number}"
             curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -d "{\"body\":\"$comment_body\"}" "$api_url/comments"
+          done
+      - name: Add label to issues
+        env:
+          LABEL: "In review"
+        run: |
+          urls=$(echo "${{ steps.get-issue-urls.outputs.urls }}")
+          for url in $urls; do
+            curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -d "{\"labels\":[\"$LABEL\"]}" "$api_url"
           done
