@@ -6,7 +6,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+
 jobs:
   merge-comment:
     permissions: write-all
@@ -25,7 +25,6 @@ jobs:
         env:
           api_urls: ${{ env.urls }}
         run: |
-          echo "api_urls: $api_urls"
           for url in $api_urls; do
             issue_number=$(echo "$url" | grep -oP '(?<=/issues/)\d+')
             comment_body="Este es un comentario de ejemplo para el issue #${issue_number}"
