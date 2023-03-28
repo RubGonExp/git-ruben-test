@@ -19,5 +19,5 @@ jobs:
         env:
             body_text: ${{ github.event.pull_request.body }}
         run: |
-          urls=$(echo "$body_text" | grep -o 'https\?://[^ ]\+'
+          urls=$(echo "$body_text" | grep -o 'https\?://[^ ]\+')
           echo $urls
