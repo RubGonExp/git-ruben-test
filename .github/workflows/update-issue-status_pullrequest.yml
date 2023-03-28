@@ -19,22 +19,5 @@ jobs:
         env:
             body_text: ${{ github.event.pull_request.body }}
         run: |
-          urls=$(echo "$body_text" | grep -oP '(?<=\().*?(?=\))')
-          echo "urls=$(echo "$urls" | sed 's#https://github.com/#https://api.github.com/repos/#')" >> $GITHUB_ENV
-      - name: Add comment to issues
-        env:
-          api_urls: ${{ env.urls }}
-        run: |
-          for url in $api_urls; do
-            issue_number=$(echo "$url" | grep -oP '(?<=/issues/)\d+')
-            comment_body="Este es un comentario de ejemplo para el issue #${issue_number}"
-            curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -d "{\"body\":\"$comment_body\"}" "$url/comments"
-          done
-      - name: Add label to issues
-        env:
-          label: "In review"
-          api_urls: ${{ env.urls }}
-        run: |
-          for url in $api_urls; do
-            curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -d "{\"labels\":[\"$label\"]}" "$url/labels"
-          done
+          urls=$(echo "$body_text" | grep -o 'https\?://[^ ]\+'
+          echo $urls
