@@ -23,4 +23,4 @@ jobs:
           urls=$(echo "$body_text" | grep -oP 'https?://[^\s]+\b(?:\([^)]*\))?')
           echo $urls
           issue_numbers=$(echo "$body_text" | grep -oP '(?<!\[)#(\d+)(?!\])')
-          echo $issue_numbers
+          echo "${issue_numbers#"#"}"
